@@ -8,7 +8,15 @@ defmodule Realworld.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: Realworld.Worker.start_link(arg)
+      # Start the Ecto repository
+      Realworld.Repo,
+      # Start the Telemetry supervisor
+      # RealworldWeb.Telemetry,
+      # Start the PubSub system
+      {Phoenix.PubSub, name: Realworld.PubSub}
+      # Start the Endpoint (http/https)
+      # RealworldWeb.Endpoint
+      # Start a worker by calling: Realworld.Worker.start_link(arg)
       # {Realworld.Worker, arg}
     ]
 
@@ -16,5 +24,12 @@ defmodule Realworld.Application do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Realworld.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  # Tell Phoenix to update the endpoint configuration
+  # whenever the application is updated.
+  def config_change(changed, _new, removed) do
+    # RealworldWeb.Endpoint.config_change(changed, removed)
+    :ok
   end
 end

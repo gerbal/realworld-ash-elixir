@@ -1,21 +1,19 @@
 defmodule Realworld.Api.Resources.UserFavorite do
-  use Ash.Resource
-    # data_layer: your_data_layer
+  use Ash.Resource, data_layer: AshPostgres.DataLayer
 
-  attributes do
-    uuid_primary_key :id
+  postgres do
+    table "user_favorites"
+    repo(Realworld.Repo)
   end
 
   relationships do
     belongs_to :user, Realworld.Api.Resources.User do
-      source_attribute :username
-      destination_attribute :username
+      primary_key? true
       allow_nil? false
     end
 
-    belongs_to :artice, Realworld.Api.Resources.Article do
-      source_attribute :slug
-      destination_attribute :slug
+    belongs_to :article, Realworld.Api.Resources.Article do
+      primary_key? true
       allow_nil? false
     end
   end

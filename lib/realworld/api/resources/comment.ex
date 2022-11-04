@@ -1,5 +1,10 @@
 defmodule Realworld.Api.Resources.Comment do
-  use Ash.Resource
+  use Ash.Resource, data_layer: AshPostgres.DataLayer
+
+  postgres do
+    table "comments"
+    repo(Realworld.Repo)
+  end
 
   actions do
     # defaults [:create, :read, :update, :destroy]
@@ -12,7 +17,7 @@ defmodule Realworld.Api.Resources.Comment do
       allow_nil? false
     end
 
-    attribute :author_username, :string do
+    attribute :author_id, :uuid do
       allow_nil? false
     end
 
@@ -21,10 +26,7 @@ defmodule Realworld.Api.Resources.Comment do
   end
 
   relationships do
-    has_one :author, Realworld.Api.Resources.User do
-      source_attribute :author_username
-      destination_attribute :username
-    end
+    has_one :author, Realworld.Api.Resources.User
 
     belongs_to :article, Realworld.Api.Resources.Article
   end

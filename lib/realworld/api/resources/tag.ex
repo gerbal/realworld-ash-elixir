@@ -1,5 +1,10 @@
 defmodule Realworld.Api.Resources.Tag do
-  use Ash.Resource
+  use Ash.Resource, data_layer: AshPostgres.DataLayer
+
+  postgres do
+    table "tags"
+    repo(Realworld.Repo)
+  end
 
   actions do
     # Add a set of simple actions. You'll customize these later.
