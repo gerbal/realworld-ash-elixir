@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  postgres:
+    container_name: backend-test-postgres
+    # Should match Google Cloud SQL Postgres version
+    image: postgres:14-alpine
+    ports:
+      - 127.0.0.1:5432:5432   
+    healthcheck:
+      test: /usr/bin/pg_isready
+      interval: 5s
+      timeout: 10s
+      retries: 120
+    hostname: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
