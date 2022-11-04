@@ -11,9 +11,9 @@ config :realworld,
   ecto_repos: [Realworld.Repo]
 
 config :realworld,
-  ash_apis: [Realworld.Api]
+  ash_apis: [Realworld]
 
-config :realworld, Realworld.Api, resources: [registry: Realworld.Api.Registry]
+config :realworld, Realworld, resources: [registry: Realworld.Registry]
 
 # Configures the endpoint
 config :realworld, RealworldWeb.Endpoint,

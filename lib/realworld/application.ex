@@ -11,11 +11,11 @@ defmodule Realworld.Application do
       # Start the Ecto repository
       Realworld.Repo,
       # Start the Telemetry supervisor
-      # RealworldWeb.Telemetry,
+      RealworldWeb.Telemetry,
       # Start the PubSub system
-      {Phoenix.PubSub, name: Realworld.PubSub}
+      {Phoenix.PubSub, name: Realworld.PubSub},
       # Start the Endpoint (http/https)
-      # RealworldWeb.Endpoint
+      RealworldWeb.Endpoint
       # Start a worker by calling: Realworld.Worker.start_link(arg)
       # {Realworld.Worker, arg}
     ]
@@ -28,8 +28,9 @@ defmodule Realworld.Application do
 
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
+  @impl true
   def config_change(changed, _new, removed) do
-    # RealworldWeb.Endpoint.config_change(changed, removed)
+    RealworldWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end
