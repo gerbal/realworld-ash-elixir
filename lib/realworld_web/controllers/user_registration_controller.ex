@@ -1,7 +1,7 @@
 defmodule RealworldWeb.UserRegistrationController do
   use RealworldWeb, :controller
 
-  alias Realworld.User
+  alias Realworld.Resources.User
   alias RealworldWeb.UserAuth
 
   def new(conn, _params) do

@@ -82,7 +82,7 @@ defmodule RealworldWeb.UserAuth do
 
     if user_token do
       {:ok, query} =
-        Realworld.UserToken
+        Realworld.Resources.UserToken
         |> Ash.Query.filter(token == ^user_token and context == "session")
         |> Ash.Query.data_layer_query()
 
@@ -108,7 +108,7 @@ defmodule RealworldWeb.UserAuth do
 
     user =
       if user_token do
-        Realworld.User
+        Realworld.Resources.User
         |> Ash.Query.for_read(:by_token, token: user_token, context: "session")
         |> Realworld.read_one!()
       end

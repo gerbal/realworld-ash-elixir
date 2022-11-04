@@ -1,13 +1,13 @@
 defmodule RealworldWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :realword
+  use Phoenix.Endpoint, otp_app: :realworld
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_realword_key",
-    signing_salt: "n9Usra1J"
+    key: "_realworld_key",
+    signing_salt: "+qtnWxLE"
   ]
 
   socket "/socket", RealworldWeb.UserSocket,
@@ -22,9 +22,9 @@ defmodule RealworldWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :realword,
+    from: :realworld,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(assets fonts images favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -32,7 +32,7 @@ defmodule RealworldWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
-    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :realword
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :realworld
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,

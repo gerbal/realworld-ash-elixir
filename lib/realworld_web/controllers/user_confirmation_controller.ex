@@ -9,7 +9,7 @@ defmodule RealworldWeb.UserConfirmationController do
 
   def create(conn, %{"user" => %{"email" => email}}) do
     user =
-      Realworld.User
+      Realworld.Resources.User
       |> Ash.Query.filter(email == ^email)
       |> Realworld.read_one!()
 
@@ -36,7 +36,7 @@ defmodule RealworldWeb.UserConfirmationController do
   # leaked token giving the user access to the account.
   def confirm(conn, %{"token" => token}) do
     result =
-      Realworld.User
+      Realworld.Resources.User
       |> Ash.Query.for_read(:with_verified_email_token, token: token, context: "confirm")
       |> Realworld.read_one()
       |> case do

@@ -20,5 +20,5 @@ defmodule RealworldWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :realword
+  use Gettext, otp_app: :realworld
 end
