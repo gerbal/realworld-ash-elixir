@@ -7,6 +7,7 @@ defmodule Realworld.Api.Registry do
 
   entries do
     entry Realworld.Api.Resources.User
+    entry Realworld.Api.Resources.UserToken
     entry Realworld.Api.Resources.UserFavorite
     entry Realworld.Api.Resources.Article
     entry Realworld.Api.Resources.ArticleTag

@@ -21,3 +21,6 @@ For more information on how to this works with other frontends/backends, head ov
 
 > npm install, npm start, etc.
 
+
+
+Substantial credit to the [ash_project/realworld](https://github.com/ash-project/realworld) which provided most of the user registration and password validation
