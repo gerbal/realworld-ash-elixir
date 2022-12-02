@@ -1,8 +1,8 @@
-defmodule Realworld.Resources.UserFavorite do
+defmodule Realworld.Resources.UserFollower do
   use Ash.Resource, data_layer: AshPostgres.DataLayer
 
   postgres do
-    table "user_favorites"
+    table "user_follower"
     repo Realworld.Repo
   end
 
@@ -12,7 +12,7 @@ defmodule Realworld.Resources.UserFavorite do
       allow_nil? false
     end
 
-    belongs_to :article, Realworld.Resources.Article do
+    belongs_to :follower, Realworld.Resources.User do
       primary_key? true
       allow_nil? false
     end

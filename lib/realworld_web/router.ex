@@ -25,11 +25,18 @@ defmodule RealworldWeb.Router do
     plug RealworldWeb.Context
   end
 
-  scope "/api" do
-    pipe_through :graphql
+  scope "/" do
+    # pipe_through(:api)
 
-    forward "/", Absinthe.Plug, schema: RealworldWeb.Schema
+    forward "/json_api", Realworld.Router
   end
+
+  # scope "/api" do
+  #   pipe_through :api
+  #   pipe_through :graphql
+
+  #   forward "/", Absinthe.Plug, schema: RealworldWeb.Schema
+  # end
 
   scope "/", RealworldWeb do
     pipe_through :browser

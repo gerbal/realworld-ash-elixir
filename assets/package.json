@@ -3,30 +3,34 @@
   "description": " ",
   "license": "MIT",
   "scripts": {
-    "deploy": "webpack --mode production",
-    "watch": "webpack --mode development --watch"
+    "deploy": "NODE_ENV=production postcss css/app.scss -o ../priv/static/assets/app.css"
   },
   "dependencies": {
     "alpinejs": "^3.10.0",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
-    "phoenix_live_view": "file:../deps/phoenix_live_view",
-    "tailwindcss": "^3.2.1"
+    "phoenix_live_view": "file:../deps/phoenix_live_view"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
-    "autoprefixer": "^10.0.4",
+    "autoprefixer": "^10.4.13",
     "babel-loader": "^8.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
+    "css-tree": "^2.3.0",
+    "esbuild": "^0.15.16",
+    "esbuild-css-modules-plugin": "^2.6.2",
     "hard-source-webpack-plugin": "^0.13.1",
     "mini-css-extract-plugin": "^0.9.0",
-    "sass": "^1.5.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
-    "postcss": "^8.1.14",
+    "postcss": "^8.4.19",
+    "postcss-cli": "^10.1.0",
+    "postcss-import": "^15.0.1",
     "postcss-loader": "^4.1.0",
+    "sass": "^1.5.0",
     "sass-loader": "^8.0.2",
+    "tailwindcss": "^3.2.4",
     "terser-webpack-plugin": "^2.3.2",
     "webpack": "4.41.5",
     "webpack-cli": "^3.3.2"

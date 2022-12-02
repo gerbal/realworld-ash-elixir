@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Helper from ash_postgres for itterating on migrations with resource changes.  
+
 # Get count of untracked migrations
 N_MIGRATIONS=$(git ls-files --others priv/repo/migrations | wc -l)
 

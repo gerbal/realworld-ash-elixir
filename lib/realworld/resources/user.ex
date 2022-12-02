@@ -1,5 +1,5 @@
 defmodule Realworld.Resources.User do
-  use Ash.Resource, data_layer: AshPostgres.DataLayer
+  use Ash.Resource, data_layer: AshPostgres.DataLayer, extensions: [AshJsonApi.Resource]
 
   alias Realworld.Resources.Preparations, warn: false
   alias Realworld.Resources.User.Preparations, as: UserPreparations, warn: false
@@ -13,7 +13,7 @@ defmodule Realworld.Resources.User do
 
   postgres do
     table "users"
-    repo(Realworld.Repo)
+    repo Realworld.Repo
   end
 
   actions do
@@ -189,6 +189,12 @@ defmodule Realworld.Resources.User do
       destination_attribute_on_join_resource :article_id
     end
 
+    many_to_many :follows, Realworld.Resources.User do
+      through Realworld.Resources.UserFollower
+      source_attribute_on_join_resource :user_id
+      destination_attribute_on_join_resource :follower_id
+    end
+
     has_many :comments, Realworld.Resources.Comment, destination_attribute: :author_id
 
     has_many :articles, Realworld.Resources.Article, destination_attribute: :author_id
@@ -200,5 +206,27 @@ defmodule Realworld.Resources.User do
 
   validations do
     validate match(:email, ~r/^[^\s]+@[^\s]+$/), description: "must have the @ sign and no spaces"
+  end
+
+  json_api do
+    type "user"
+
+    includes([
+      :favorites,
+      :comments,
+      :articles
+    ])
+
+    routes do
+      base "/profiles"
+
+      primary_key do
+        keys [:username]
+      end
+
+      get :read
+      post_to_relationship :follows
+      delete_from_relationship :follows
+    end
   end
 end

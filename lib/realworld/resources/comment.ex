@@ -3,11 +3,11 @@ defmodule Realworld.Resources.Comment do
 
   postgres do
     table "comments"
-    repo(Realworld.Repo)
+    repo Realworld.Repo
   end
 
   actions do
-    # defaults [:create, :read, :update, :destroy]
+    defaults [:create, :read, :update, :destroy]
   end
 
   attributes do
@@ -21,12 +21,16 @@ defmodule Realworld.Resources.Comment do
       allow_nil? false
     end
 
+    attribute :article_id, :uuid do
+      allow_nil? false
+    end
+
     create_timestamp :createdAt
     update_timestamp :updatedAt
   end
 
   relationships do
-    has_one :author, Realworld.Resources.User
+    belongs_to :author, Realworld.Resources.User
 
     belongs_to :article, Realworld.Resources.Article
   end

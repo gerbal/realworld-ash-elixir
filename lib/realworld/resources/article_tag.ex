@@ -3,7 +3,7 @@ defmodule Realworld.Resources.ArticleTag do
 
   postgres do
     table "article_tags"
-    repo(Realworld.Repo)
+    repo Realworld.Repo
   end
 
   relationships do

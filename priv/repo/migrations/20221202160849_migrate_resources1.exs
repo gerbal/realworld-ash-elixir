@@ -42,6 +42,28 @@ defmodule Realworld.Repo.Migrations.MigrateResources1 do
 
     create unique_index(:user_tokens, [:context, :token], name: "user_tokens_token_context_index")
 
+    create table(:user_follower, primary_key: false) do
+      add :user_id,
+          references(:users,
+            column: :id,
+            name: "user_follower_user_id_fkey",
+            type: :uuid,
+            prefix: "public"
+          ),
+          primary_key: true,
+          null: false
+
+      add :follower_id,
+          references(:users,
+            column: :id,
+            name: "user_follower_follower_id_fkey",
+            type: :uuid,
+            prefix: "public"
+          ),
+          primary_key: true,
+          null: false
+    end
+
     create table(:user_favorites, primary_key: false) do
       add :user_id,
           references(:users,
@@ -63,10 +85,19 @@ defmodule Realworld.Repo.Migrations.MigrateResources1 do
     create table(:comments, primary_key: false) do
       add :id, :bigserial, null: false, primary_key: true
       add :body, :text, null: false
-      add :author_id, :uuid, null: false
+
+      add :author_id,
+          references(:users,
+            column: :id,
+            name: "comments_author_id_fkey",
+            type: :uuid,
+            prefix: "public"
+          ),
+          null: false
+
+      add :article_id, :uuid, null: false
       add :createdAt, :utc_datetime_usec, null: false, default: fragment("now()")
       add :updatedAt, :utc_datetime_usec, null: false, default: fragment("now()")
-      add :article_id, :uuid
     end
 
     create table(:articles, primary_key: false) do
@@ -98,8 +129,15 @@ defmodule Realworld.Repo.Migrations.MigrateResources1 do
       add :title, :text
       add :description, :text
       add :body, :text
-      add :author_id, :uuid
-      add :favorited, :boolean
+
+      add :author_id,
+          references(:users,
+            column: :id,
+            name: "articles_author_id_fkey",
+            type: :uuid,
+            prefix: "public"
+          )
+
       add :createdAt, :utc_datetime_usec, null: false, default: fragment("now()")
       add :updatedAt, :utc_datetime_usec, null: false, default: fragment("now()")
     end
@@ -138,10 +176,11 @@ defmodule Realworld.Repo.Migrations.MigrateResources1 do
 
     drop_if_exists unique_index(:articles, [:slug], name: "articles_unique_slug_index")
 
+    drop constraint(:articles, "articles_author_id_fkey")
+
     alter table(:articles) do
       remove :updatedAt
       remove :createdAt
-      remove :favorited
       remove :author_id
       remove :body
       remove :description
@@ -163,6 +202,8 @@ defmodule Realworld.Repo.Migrations.MigrateResources1 do
 
     drop table(:articles)
 
+    drop constraint(:comments, "comments_author_id_fkey")
+
     drop table(:comments)
 
     drop table(:tags)
@@ -170,6 +211,12 @@ defmodule Realworld.Repo.Migrations.MigrateResources1 do
     drop constraint(:user_favorites, "user_favorites_user_id_fkey")
 
     drop table(:user_favorites)
+
+    drop constraint(:user_follower, "user_follower_follower_id_fkey")
+
+    drop constraint(:user_follower, "user_follower_user_id_fkey")
+
+    drop table(:user_follower)
 
     drop_if_exists unique_index(:user_tokens, [:context, :token],
                      name: "user_tokens_token_context_index"

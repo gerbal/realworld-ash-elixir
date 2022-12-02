@@ -36,6 +36,8 @@ defmodule Realworld.MixProject do
       {:ash, "~> 2.4"},
       {:ash_postgres, ">= 1.0.0"},
       {:ash_phoenix, ">= 1.0.0"},
+      # {:ash_json_api, ">= 0.30.1"},
+      {:ash_json_api, path: "../ash_json_api"},
 
       # GraphQL
       {:absinthe, "~> 1.5"},
@@ -57,6 +59,7 @@ defmodule Realworld.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_dashboard, "~> 0.4"},
       {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
@@ -72,6 +75,7 @@ defmodule Realworld.MixProject do
       {:telemetry_poller, "~> 1.0"},
 
       # dev utils
+      {:ex_check, "~> 0.14.0"},
       {:sobelow, "~> 0.8", only: :dev},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:elixir_sense, github: "elixir-lsp/elixir_sense", only: [:dev, :test]}
@@ -86,10 +90,10 @@ defmodule Realworld.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["ash_postgres.create", "ash_postgres.migrate", "run priv/repo/seeds.exs"],
+      setup: ["ash_postgres.create", "ash_postgres.migrate", "run priv/repo/seeds.exs", "cmd --cd assets npm install"],
       reset: ["ash_postgres.drop", "setup"],
       test: ["reset", "test"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
   end
 end

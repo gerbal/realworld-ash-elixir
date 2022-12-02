@@ -9,6 +9,7 @@ defmodule Realworld.Registry do
     entry Realworld.Resources.User
     entry Realworld.Resources.UserToken
     entry Realworld.Resources.UserFavorite
+    entry Realworld.Resources.UserFollower
     entry Realworld.Resources.Article
     entry Realworld.Resources.ArticleTag
     entry Realworld.Resources.Tag
